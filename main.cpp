@@ -7,6 +7,7 @@ int main()
 	node* root = NULL;
 
 	build(root);
+	cout << "Test" << endl;
         display(root);
 	destroy(root);
 
