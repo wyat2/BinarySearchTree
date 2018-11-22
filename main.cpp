@@ -8,7 +8,8 @@ int main()
 
 	build(root);
 	cout << "Test" << endl;
-        display(root);
+	display(root);
+	cout << "\nEnd Test" << endl;
 	destroy(root);
 
 return 0;

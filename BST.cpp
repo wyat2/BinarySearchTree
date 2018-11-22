@@ -1,75 +1,77 @@
 #include "BST.h"
 
-int size = 24;
-
-void build(node*& root)
-{
-	if(!root)
-	{
-		root = new node;
-		root->data = rand()%24;
-		root->left = NULL;
-		root->right = NULL;
-                --size;
-	}
-		if(size == 0)
-			return;
-		else
-			build(root->left);
-}
+int size = 24;      // size of BSt
 
 
-/*
-void build(node*& root)
-{
-	node* temp = new node;
-	temp->data = size/2;
-	temp->left = NULL;
-	temp->right = NULL;
-	root = temp;
-
-	int x;
-
-	for(int i=0; i<size; ++i)
-	{
-		x = rand() % size;
-		cout << i << "x = " << x << endl;
-           insert(temp, x);
-	}
-}
-
+// insert new node with data x into BST
 bool insert(node*& root, int x)
+  {
+          if(!root)
+         {
+                 root = new node;
+                 root->data = x;
+                 root->left = NULL;
+                 root->right = NULL;
+                 return 1;
+         }
+         else
+                 if(x < root->data)
+                         return insert(root->left, x);
+                 else
+                        return insert(root->right, x);
+ }
+
+// build tree of size (global variable)
+void build(node*& root)
 {
 	if(!root)
-	{
-		root = new node;
-		root->data = x;
-		root->left = NULL;
-		root->right = NULL;
-		return 1;
-	}
-	else
-		if(x < root->data)
-			return insert(root->left, x);
-	        else
-			return insert(root->right, x);
-}
-*/
+		 {
+                 root = new node;
+                 root->data = size/2;
+                 root->left = NULL;
+                 root->right = NULL;
+         }
 
+	srand(time(0));
+	for(int i = 0; i< size; ++i)
+	{
+		if(i % 2)
+		insert(root, (rand()%size/2));
+		else
+		insert(root, (rand()%size/2 + size/2));
+	}
+}
+
+// Display BST inorder traversal
 bool display(node* root)
 {
-	if(!root)
-	{
-		cout << "NULL " << endl;
+	if(root == NULL)
 		return 0;
-	}
-        else
-	{
-	return display(root->left);
-	return display(root->right);
-	cout << "-> " << root->data;
-	}
 	
+	display(root->left);
+	cout << " -> " << root->data;
+	display(root->right);
+	return 1;
+}
+
+// Display left side of root of BST
+void displayL(node* root)
+{
+	if(!root)
+		return;
+
+	cout << " -: " << root->data;
+	return displayL(root->left);
+}
+
+// Display right side of root of BST
+void displayR(node* root)
+{
+	if(!root)
+		return;
+
+	cout << "-: "<< root->data;
+	return displayR(root->right);
 }
 
 void destroy(node*& root)
@@ -77,8 +79,8 @@ void destroy(node*& root)
 	if(!root)
 		return;
 	destroy(root->left);
+	destroy(root->right);
 	delete root;
 	root = NULL;
-	destroy(root->right);
 }
 
